@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
@@ -5,30 +6,23 @@ using UnityEngine;
 
 public class PlayerScript : MonoBehaviour
 {
-    [SerializeField] Transform[] SpawnPositions;
-    
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-}
-
-public class Player : MonoBehaviour
-{
+    //«ащищенные переменные
     protected float _health; //«доровье
     protected float _maxHealth; // ћаксиум здоровь€
     protected float _speed; // скорость передвижени€
-    protected Transform _position; //позици€ игрока
+    protected float _maxSpeed; //ќграничение по скорости
+    protected float _armor; // ѕочему бы шару не иметь оболочку брони?)
+    protected Vector3 _position; //позици€ игрока
+    //ќбщие переменные
+    public Vector3 _direction; //Ќаправление движени€;
+    public float _rotationSpeed; // скорость врощени€ вокруг оси Y
+    public Quaternion _mRotation = Quaternion.identity;
+    public Rigidbody _rigidbody;
+
 
     public void SpeedUp(float speedMultyplier)
     {
-        _speed = _speed* speedMultyplier; // ускор€ем скорость передвижени€ на х
+        _speed = _speed * speedMultyplier; // ускор€ем скорость передвижени€ на х
     }
     public void DoSomeDamage(float damage)
     {
@@ -36,27 +30,42 @@ public class Player : MonoBehaviour
     }
     public void HealPlayerOn(float health)
     {
-        if(_health > 0 && _health < _maxHealth)
+        if (_health > 0 && _health < _maxHealth)
         {
             _health = _health + health;
             if (_health > _maxHealth)
             {
-                float difference = _health- _maxHealth;
+                float difference = _health - _maxHealth;
                 _health = _health - difference;
             }
         }
-        
     }
-    public void InitializePLayer(float health, float speed, Transform _resPoint, GameObject _playerPprefab)
+    public void SetPlayerStats(float health, float speed)
     {
-        _health=health;
-        _speed=speed;
-        int randomPosition = Random.Range(0,11);
-        if (randomPosition == 0)
-        {
-            _position.position = _resPoint.position;
-            Instantiate(_playerPprefab, _resPoint);
-        }
-        
+        _health = health;
+        _maxHealth = health;
+        _speed = speed;
+        _maxSpeed = speed * 2.5f;
+    }
+
+    private void Start()
+    {
+        _rigidbody = GetComponent<Rigidbody>();
+        SetPlayerStats(100, 5f);
+        Debug.Log("HP: " + _health);
+        Debug.Log("SPEED: " + _speed);
+    }
+
+    private void FixedUpdate()
+    {
+        MovementLogic();
+    }
+
+    public void MovementLogic()
+    {
+        float horInput = Input.GetAxis("Horizontal");
+        float verInput = Input.GetAxis("Vertical");
+        Vector3 movement = new Vector3(horInput, 0.0f, verInput);
+        _rigidbody.AddForce(movement * _speed);
     }
 }
