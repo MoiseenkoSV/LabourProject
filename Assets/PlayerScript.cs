@@ -20,9 +20,17 @@ public class PlayerScript : MonoBehaviour
     public Rigidbody _rigidbody;
 
 
-    public void SpeedUp(float speedMultyplier)
+    public void SpeedUp(float speedMultyplyer)
     {
-        _speed = _speed * speedMultyplier; // ускоряем скорость передвижения на х
+        float _lastSpeed = _speed;
+        _speed = _speed * speedMultyplyer; // ускоряем скорость передвижения на х
+        Debug.Log("Текущая скорость: " + _speed);
+    }
+
+    public void SlowDown(float _speedReduce)
+    {
+        float _lastSpeed = _speed;
+        _speed = _speed * _speedReduce;
     }
     public void DoSomeDamage(float damage)
     {
