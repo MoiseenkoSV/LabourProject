@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class PlayerScript : MonoBehaviour
 {
@@ -19,24 +20,25 @@ public class PlayerScript : MonoBehaviour
     public Quaternion _mRotation = Quaternion.identity;
     public Rigidbody _rigidbody;
 
-
-    public void SpeedUp(float speedMultyplyer)
+    #region Методы "Скорости"
+    public void ChahgeSpeedMultyplyer(float speedMultyplyer) //Метод изменения скорости передвижения игрока
     {
-        float _lastSpeed = _speed;
-        _speed = _speed * speedMultyplyer; // ускоряем скорость передвижения на х
+        _speed = _speed * speedMultyplyer; 
         Debug.Log("Текущая скорость: " + _speed);
     }
 
-    public void SlowDown(float _speedReduce)
+    public void ResetSpeedToDefaults(float speed) //Метод восстановления скорости по-умолчанию
     {
-        float _lastSpeed = _speed;
-        _speed = _speed * _speedReduce;
+        _speed = speed;
     }
-    public void DoSomeDamage(float damage)
+    #endregion
+   
+    #region Методы "Здоровья"
+    public void DoSomeDamage(float damage) //Снимаем здоровье игрока
     {
-        _health = _health - damage; //снимаем здоровье у игрока
+        _health = _health - damage;
     }
-    public void HealPlayerOn(float health)
+    public void HealPlayerOn(float health) //Лечение игрока
     {
         if (_health > 0 && _health < _maxHealth)
         {
@@ -48,32 +50,43 @@ public class PlayerScript : MonoBehaviour
             }
         }
     }
-    public void SetPlayerStats(float health, float speed)
+    #endregion
+
+    #region Инициализация игрока
+    public void SetPlayerStats(float health, float speed) //Метод назначения базовых параметров игрока
     {
         _health = health;
         _maxHealth = health;
         _speed = speed;
         _maxSpeed = speed * 2.5f;
     }
-
-    private void Start()
+    public void StartPosition(Vector3 starTransform)//Метод который переносит игрока в указанную точку в начале игры.
     {
-        _rigidbody = GetComponent<Rigidbody>();
-        SetPlayerStats(100, 5f);
-        Debug.Log("HP: " + _health);
-        Debug.Log("SPEED: " + _speed);
+        gameObject.transform.position = starTransform;
     }
+    #endregion
 
-    private void FixedUpdate()
-    {
-        MovementLogic();
-    }
-
-    public void MovementLogic()
+    #region Физика движений
+    public void MovementLogic() //Логика движения игрока
     {
         float horInput = Input.GetAxis("Horizontal");
         float verInput = Input.GetAxis("Vertical");
         Vector3 movement = new Vector3(horInput, 0.0f, verInput);
         _rigidbody.AddForce(movement * _speed);
+    }
+    #endregion
+
+    private void Start()
+    {
+        int randomPosition = Random.Range(0, 11); //Генерируем рандомное число от 0 до 11
+        FindObjectOfType<GameManager>().RespawnPlayer(randomPosition); // передаем число геймменеджеру, чтобы он дал координату.
+        _rigidbody = GetComponent<Rigidbody>(); //инициализируем физику
+        SetPlayerStats(100, 5f); // Задаем стартовые значения параметров игрока
+        Debug.Log("Здоровье: " + _health);
+        Debug.Log("Скорость: " + _speed);
+    }
+    private void FixedUpdate()
+    {
+        MovementLogic();
     }
 }

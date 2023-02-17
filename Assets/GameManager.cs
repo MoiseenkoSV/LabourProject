@@ -1,27 +1,19 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class GameManager : MonoBehaviour
 {
     [SerializeField] Transform[] SpawnPositions;
     [SerializeField] GameObject _playerPrefab;
     [SerializeField] public int _goalEndGame;
-
-    private void Start()
+    public void RespawnPlayer(int positionIndex) //Метод геймменеджера, который назначает игроку точку в которой ему надо возродиться
     {
-        int randomPosition = Random.Range(0, 11); //Генерируем рандомное число от 0 до 11
-        Debug.Log(randomPosition);
-        Debug.Log(SpawnPositions[randomPosition].name);
-        Instantiate(_playerPrefab, SpawnPositions[randomPosition].transform);
-        
+        Debug.Log(positionIndex);
+        Debug.Log(SpawnPositions[positionIndex].name);
+        Vector3 playerPosition = SpawnPositions[positionIndex].position;
+        FindObjectOfType<PlayerScript>().StartPosition(playerPosition);
     }
-    
-    
-}
-
-public class GamePlayEffects
-{
-    [SerializeField]public float _slowDownKoeff = 0.5f;
-    
 }

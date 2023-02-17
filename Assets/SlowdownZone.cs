@@ -1,17 +1,16 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
-using static UnityEngine.Debug;
-using Update = UnityEngine.PlayerLoop.Update;
 
-public class SpeedUpZone : MonoBehaviour
+public class SlowdownZone : MonoBehaviour
 {
     [Header("Изменяемые параметры")]
     [SerializeField] private float time; //Тут задается время через инспектор
     [SerializeField] private Text timerText; //добавляется текстовое поле, в котором отображается таймер
+
+    [Header("Тестовое поле")] 
+    [SerializeField] private GameObject playerPrefab;
     
     private bool _isUsed = false; // бул который указывает на состояние бонуса, активен или нет
     private float _timeLeft;
@@ -19,7 +18,7 @@ public class SpeedUpZone : MonoBehaviour
     private void Start()
     {
         _timeLeft = time;
-        timerText.enabled = false;
+        timerText.enabled = playerPrefab.GetComponentInChildren<Camera>(GetComponentInChildren<Canvas>(GetComponentInChildren<Text>()));
     }
 
     private void Update()
@@ -37,7 +36,7 @@ public class SpeedUpZone : MonoBehaviour
                 FindObjectOfType<PlayerScript>().ResetSpeedToDefaults(5f);
                 _isUsed = false;
                 timerText.enabled = false;
-                Log("Бонус отключен");
+                Debug.Log("Дебаф отключен");
             }
         }
     }
@@ -46,9 +45,9 @@ public class SpeedUpZone : MonoBehaviour
         
         if (_isUsed == false)
         {
-            Log("Бонус активирован");
+            Debug.Log("Дебаф активирован");
             _isUsed = true;
-            FindObjectOfType<PlayerScript>().ChahgeSpeedMultyplyer(2f);
+            FindObjectOfType<PlayerScript>().ChahgeSpeedMultyplyer(0.2f);
         }
     }
     
@@ -60,6 +59,6 @@ public class SpeedUpZone : MonoBehaviour
  
         float minutes = Mathf.FloorToInt(_timeLeft / 60);
         float seconds = Mathf.FloorToInt(_timeLeft % 60);
-        timerText.text = string.Format("Ускорение: {0:00} : {1:00}", minutes, seconds);
+        timerText.text = string.Format("Замедление: {0:00} : {1:00}", minutes, seconds);
     }
 }

@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7702847225044462917}
   m_Layer: 0
-  m_Name: SpeedUpBonusPrefab
+  m_Name: SlowdownDebuf
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -44,7 +44,7 @@ GameObject:
   - component: {fileID: 2630920793315474993}
   - component: {fileID: 2963358297443735463}
   - component: {fileID: 6545219877410971723}
-  - component: {fileID: 312632102306221973}
+  - component: {fileID: 1833240039649939246}
   m_Layer: 0
   m_Name: Particle System
   m_TagString: Untagged
@@ -60,7 +60,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8666401950274019556}
   m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.159, z: 0}
   m_LocalScale: {x: 0.06, y: 0.06, z: 0.06}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -203,7 +203,7 @@ ParticleSystem:
     startSpeed:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 2.14
+      scalar: 0.64
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -319,7 +319,7 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 1
+      scalar: 0.9
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -642,7 +642,7 @@ ParticleSystem:
     gravityModifier:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.01
+      scalar: 0.005
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -3846,7 +3846,7 @@ ParticleSystem:
       properties: 0
       emitProbability: 1
   LightsModule:
-    enabled: 0
+    enabled: 1
     ratio: 1
     light: {fileID: 0}
     randomDistribution: 0
@@ -4795,7 +4795,7 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 390ae00015fd87d4e998347bfd45b123, type: 2}
+  - {fileID: 2100000, guid: 835a06829f9e2174180cef949ed5584d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -4859,7 +4859,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 15.832338, y: 16.35809, z: 16.578133}
   m_Center: {x: -0.05995822, y: 0.0085163135, z: -3.9532886}
---- !u!114 &312632102306221973
+--- !u!114 &1833240039649939246
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -4868,8 +4868,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 8666401950274019556}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 851f79c533f70f7488d3cc6571e335a5, type: 3}
+  m_Script: {fileID: 11500000, guid: eb1eb02f64688e04895b79164984032b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  time: 10
+  time: 0
   timerText: {fileID: 0}
+  playerPrefab: {fileID: 0}
