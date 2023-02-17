@@ -43,7 +43,6 @@ public class SpeedUpZone : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        
         if (_isUsed == false)
         {
             Log("Бонус активирован");
