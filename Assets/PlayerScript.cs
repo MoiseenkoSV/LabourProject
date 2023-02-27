@@ -82,8 +82,7 @@ public class PlayerScript : MonoBehaviour
         FindObjectOfType<GameManager>().RespawnPlayer(randomPosition); // передаем число геймменеджеру, чтобы он дал координату.
         _rigidbody = GetComponent<Rigidbody>(); //инициализируем физику
         SetPlayerStats(100, 5f); // Задаем стартовые значения параметров игрока
-        Debug.Log("Здоровье: " + _health);
-        Debug.Log("Скорость: " + _speed);
+        Debug.Log($"Здоровье: {_health}, Скорость {_speed}");
     }
     private void FixedUpdate()
     {

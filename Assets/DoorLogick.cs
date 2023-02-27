@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class DoorLogick : MonoBehaviour
 {
+    [SerializeField] Collider _exitCollider;
     private void Update()
     {
         if (FindObjectOfType<GameManager>()._hasKey)

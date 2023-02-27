@@ -54,11 +54,20 @@ public class SpeedUpZone : MonoBehaviour
     private void UpdateTimerUI()
     {
         timerText.enabled = true;
-        if (_timeLeft < 0)
-            _timeLeft = 0;
- 
-        float minutes = Mathf.FloorToInt(_timeLeft / 60);
-        float seconds = Mathf.FloorToInt(_timeLeft % 60);
-        timerText.text = string.Format("Ускорение: {0:00} : {1:00}", minutes, seconds);
+
+        try
+        {
+            if (_timeLeft < 0)
+                _timeLeft = 0;
+
+            float minutes = Mathf.FloorToInt(_timeLeft / 60);
+            float seconds = Mathf.FloorToInt(_timeLeft % 60);
+            timerText.text = string.Format("Ускорение: {0:00} : {1:00}", minutes, seconds);
+        }
+        catch (NullReferenceException)
+        {
+            Log("Ошибка вывода текста. Поле не задано.");
+        }
+        
     }
 }
